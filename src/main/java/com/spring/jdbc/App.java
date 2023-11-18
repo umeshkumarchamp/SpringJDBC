@@ -1,5 +1,6 @@
 package com.spring.jdbc;
 
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.context.ApplicationContext;
@@ -26,8 +27,8 @@ public class App {
         do {
             System.out.println("<============================== Employee Management ==============================>");
             System.out.println(
-                    "Add Employee : 1\nUpdate Employee : 2\nDelete Employee : 3\nList of all employees : 4\nExit : 0");
-            System.out.println("Enter Your Choice : - ");
+                    "Add Employee : 1\nUpdate Employee : 2\nDelete Employee : 3\nGet Employee Details By Id : 4\nGet Employee List : 5 \nExit : 0");
+            System.out.print("Enter Your Choice : - ");
             choice = sc.nextInt();
             sc.nextLine();
             EmployeeDao empDao = con.getBean("empDaoImpl", EmployeeDao.class);
@@ -97,6 +98,22 @@ public class App {
                     } else {
                         System.out.println("Something went wrong !");
                     }
+                    break; 
+                case 4: 
+                    System.out.print("Enter Your Id : ");
+                    id = sc.nextInt(); 
+                    Employee employee = empDao.getEmployeeById(id);
+                    if(employee != null){
+                        System.out.println("\nDetails Fetched Successfully.");
+                        System.out.println(employee);
+                    }
+                    break; 
+
+                case 5:
+                    List<Employee> empList = empDao.getEmployeeList();
+                    for(Employee e : empList){
+                        System.out.println(e);
+                    }   
                     break; 
                 case 0:
                     System.exit(0);

@@ -1,6 +1,9 @@
 package com.spring.jdbc.daoimplementation;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import com.spring.jdbc.dao.EmployeeDao;
 import com.spring.jdbc.model.Employee;
@@ -47,11 +50,22 @@ public class EmpDaoImplement implements EmployeeDao {
         return res; 
     }
 
+    /**
+     * Get Employee details by Id...
+     */
     @Override
-    public int getEmployeeById(int empId) {
+    public Employee getEmployeeById(int empId) {
         String query = "SELECT * FROM employees WHERE id=?";
-       
-        return 1; 
+        RowMapper<Employee> rowMapper = new RowMapperImplement();
+        Employee emp = this.jdbcTemplate.queryForObject(query, rowMapper, empId);
+        return emp; 
+    }
+
+    @Override
+    public List<Employee> getEmployeeList() {
+        String query = "SELECT * FROM employees ORDER BY id";
+        List<Employee> empList = this.jdbcTemplate.query(query,new RowMapperImplement());
+        return empList;
     }
 
 }

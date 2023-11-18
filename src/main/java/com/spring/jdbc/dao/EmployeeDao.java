@@ -1,5 +1,7 @@
 package com.spring.jdbc.dao;
 
+import java.util.List;
+
 import com.spring.jdbc.model.Employee;
 
 public interface EmployeeDao {
@@ -10,6 +12,8 @@ public interface EmployeeDao {
 
     public int deleteEmployee(int empId);
 
-    public int getEmployeeById(int empId);
+    public Employee getEmployeeById(int empId);
+
+    public List<Employee> getEmployeeList();
     
 }
