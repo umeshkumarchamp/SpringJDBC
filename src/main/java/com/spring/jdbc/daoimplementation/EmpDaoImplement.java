@@ -2,14 +2,18 @@ package com.spring.jdbc.daoimplementation;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import com.spring.jdbc.dao.EmployeeDao;
 import com.spring.jdbc.model.Employee;
 
+@Component("empDaoImpl")
 public class EmpDaoImplement implements EmployeeDao {
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public JdbcTemplate getJdbcTemplate() {

@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.spring.jdbc.config.JdbcConfig;
 import com.spring.jdbc.dao.EmployeeDao;
-import com.spring.jdbc.daoimplementation.EmpDaoImplement;
 import com.spring.jdbc.model.Employee;
 
 /**
@@ -19,7 +21,11 @@ public class App {
     public static void main(String[] args) {
         System.out.println(
                 "<================================== S P R I N G   J D B C ==================================>");
-        ApplicationContext con = new ClassPathXmlApplicationContext("com/spring/jdbc/config.xml");
+
+        // ApplicationContext con = new ClassPathXmlApplicationContext("com/spring/jdbc/config.xml");
+
+        // Initialize the Spring context with the Java-based configuration
+        AnnotationConfigApplicationContext con = new AnnotationConfigApplicationContext(JdbcConfig.class);
         System.out.println(con);
         System.out.println();
         int choice;
@@ -46,7 +52,7 @@ public class App {
                     empDao = con.getBean("empDaoImpl", EmployeeDao.class);
                     emp = new Employee();
                     emp.setName(name);
-                    emp.setEmail(email);
+                    emp.setEmail(email); 
                     emp.setGender(gender);
                     emp.setPhone(phone);
 
@@ -76,7 +82,7 @@ public class App {
                     emp.setName(name);
                     emp.setEmail(email);
                     emp.setGender(gender);
-                    emp.setPhone(phone);    
+                    emp.setPhone(phone);
                     emp.setId(id);
 
                     res = empDao.updateEmployee(emp);
@@ -98,23 +104,23 @@ public class App {
                     } else {
                         System.out.println("Something went wrong !");
                     }
-                    break; 
-                case 4: 
+                    break;
+                case 4:
                     System.out.print("Enter Your Id : ");
-                    id = sc.nextInt(); 
+                    id = sc.nextInt();
                     Employee employee = empDao.getEmployeeById(id);
-                    if(employee != null){
+                    if (employee != null) {
                         System.out.println("\nDetails Fetched Successfully.");
                         System.out.println(employee);
                     }
-                    break; 
+                    break;
 
                 case 5:
                     List<Employee> empList = empDao.getEmployeeList();
-                    for(Employee e : empList){
+                    for (Employee e : empList) {
                         System.out.println(e);
-                    }   
-                    break; 
+                    }
+                    break;
                 case 0:
                     System.exit(0);
                     break;
@@ -125,7 +131,7 @@ public class App {
         } while (choice != 0);
 
         sc.close();
-
+        con.close();
         // =============================== Second Way ===============================
 
         // EmployeeDao empDao = con.getBean("empDaoImpl", EmployeeDao.class);
